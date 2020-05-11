@@ -1,0 +1,36 @@
+{% load  static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>BAJAR VIDEO YOUTUBE</title>
+        <link rel="STYLESHEET" type="text/css" href={% static 'css/upload.css' %}>
+        <script type="text/javascript" languaje="javascript" src={% static 'js/javascript.js' %} ></script>
+    </head>
+    <body>
+        <p id="portada">BAJAR VIDEO YOUTUBE</p>
+    {% block content %}
+        <div id="formupload">
+            
+            <form id="formu" enctype="multipart/form-data" method="POST" >
+                {% csrf_token %}
+                <p id="fila">CARGAR URL DEL VIDEO:
+                <table>
+                    <tr>
+                        <td><label for="url">PEGA AQUI URL DEL VIDEO</label><input type="text" name="url" id="url" onchange="enableBoton()"></td>
+                    </tr>
+                    <tr>
+                        <td><button type="submit" id="boton2">CARGAR URL</button></td>
+                    </tr>
+                </table> 
+                
+                 <p id="enlace">Fichero bajado: {{ url }}</p>
+            
+            </form>
+
+            
+    {% endblock %}
+        </div>
+    </body>
+
+
+</html>
