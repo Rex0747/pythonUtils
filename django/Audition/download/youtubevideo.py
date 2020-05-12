@@ -45,18 +45,18 @@ def DescargarListaVideos( enlace , ruta ):
 def DescargarVideo( enlace ):
     ruta = os.path.join( BASE_DIR ,'download/temp' )
     video = pafy.new( enlace )
-    print(video.title)
-    print(video.duration)
-    print(video.rating)
-    print(video.author)
-    print(video.length) 
-    print(video.thumb)
-    print(video.videoid)
-    print(video.viewcount)
+    # print(video.title)
+    # print(video.duration)
+    # print(video.rating)
+    # print(video.author)
+    # print(video.length) 
+    # print(video.thumb)
+    # print(video.videoid)
+    # print(video.viewcount)
     name = video.title.replace(' ','')
-    print(name)
-    print("Autor " + video.author)
-    print("Duracion " + video.duration)
+    # print(name)
+    # print("Autor " + video.author)
+    # print("Duracion " + video.duration)
     data = video.getbest(preftype="mp4")
     try:
         data.download(filepath=ruta + '/' + name + "." + data.extension)
@@ -69,19 +69,19 @@ def DescargarVideo( enlace ):
 def DescargarAudio( url ):
     ruta = os.path.join( BASE_DIR ,'download/temp' )
     video = pafy.new(url)
-    print(video.title)
-    print(video.duration)
-    print(video.rating)
-    print(video.author)
-    print(video.length)
-    print(video.thumb)
-    print(video.videoid)
-    print(video.viewcount)
+    # print(video.title)
+    # print(video.duration)
+    # print(video.rating)
+    # print(video.author)
+    # print(video.length)
+    # print(video.thumb)
+    # print(video.videoid)
+    # print(video.viewcount)
     name = video.title.replace(" ", "")
     audio = video.getbestaudio(preftype="any") #any
     fila = ruta + "/" + name + "." + audio.extension
     f = audio.download( fila)
-    print('Bajado: '+str(f)) 
+    #print('Bajado: '+str(f)) 
     fichero = convertir(fila)
     return fichero
 
@@ -94,7 +94,7 @@ def convertir(fichero):
     print("Exportando a mp3 ")
     try:
         print("Segmentando.")
-        home = sys.prefix # escribe el home de python
+        home = sys.prefix # escribe el home de python, los programas de compresion estan en el home de python
         AudioSegment.ffmpeg = home + '/ffmpeg.exe'   #r'C:/Programas/Portable_APP\WPy64-3810/python-3.8.1.amd64\Scripts/ffmpeg.exe'
         AudioSegment.converter = home + '/ffmpeg.exe'   #r'C:/Programas/Portable_APP\WPy64-3810/python-3.8.1.amd64\Scripts/ffmpeg.exe'
         sonido = AudioSegment.from_file(fichero)

@@ -6,7 +6,7 @@
         <link rel="STYLESHEET" type="text/css" href={% static 'css/upload.css' %}>
         <script type="text/javascript" languaje="javascript" src={% static 'js/javascript.js' %} ></script>
     </head>
-    <body>
+    <body background= {% static 'img/video.png' %}>
         <p id="portada">BAJAR VIDEO YOUTUBE</p>
     {% block content %}
         <div id="formupload">
@@ -16,15 +16,15 @@
                 <p id="fila">CARGAR URL DEL VIDEO:
                 <table>
                     <tr>
-                        <td><label for="url">PEGA AQUI URL DEL VIDEO</label><input type="text" name="url" id="url" onchange="enableBoton()"></td>
+                        <td><label for="url">PEGA AQUI URL DEL VIDEO</label><input type="text" name="url" id="url" onchange="enableBoton()"></td><br>
+                        <td><button type="submit" id="boton2">EXTRAER VIDEO</button></td>
                     </tr>
                     <tr>
-                        <td><button type="submit" id="boton2">CARGAR URL</button></td>
+                        <td><img id="img1" src={% static 'img/video1.jpg' %}></td>
+                        <td><img id="img1" src={% static 'img/video2.jpg' %}></td>
                     </tr>
                 </table> 
-                
-                 <p id="enlace">Fichero bajado: {{ url }}</p>
-            
+                <br>
             </form>
 
             

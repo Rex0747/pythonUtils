@@ -6,24 +6,26 @@
         <link rel="STYLESHEET" type="text/css" href={% static 'css/upload.css' %}>
         <script type="text/javascript" languaje="javascript" src={% static 'js/javascript.js' %} ></script>
     </head>
-    <body>
+    <body background= {% static 'img/musica1.jpg' %}>
         <p id="portada">BAJAR AUDIO YOUTUBE</p>
     {% block content %}
-        <div id="formupload">
+        <div id="formupload" >
             
             <form id="formu" enctype="multipart/form-data" method="POST" >
                 {% csrf_token %}
                 <p id="fila">CARGAR URL DEL VIDEO:
                 <table>
                     <tr>
-                        <td><label for="url">PEGA AQUI URL DEL VIDEO</label><input type="text" name="url" id="url" onchange="enableBoton()"></td>
+                        <td><label id="lurl" for="url">PEGA AQUI URL DEL VIDEO</label></td>
+                        <td><input type="text" name="url" id="url" onchange="enableBoton()"></td>
                     </tr>
                     <tr>
-                        <td><button type="submit" id="boton2">CARGAR URL</button></td>
+                        <td><button type="submit" id="boton2">EXTRAER AUDIO</button></td>
+                        <td><img id="img1" src={% static 'img/concert.jpg' %}></td>
                     </tr>
                 </table> 
                 
-                 <p id="enlace">Fichero bajado: {{ url }}</p>
+                 
             
             </form>
 
