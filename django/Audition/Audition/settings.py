@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'convert','download',
+    'convert','download','streamer',
 
 ]
 
@@ -50,13 +50,14 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
+X_FRAME_OPTIONS = 'ALLOW'
 ROOT_URLCONF = 'Audition.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR , 'download/templates'),],
+        'DIRS': [os.path.join(BASE_DIR , 'download/templates'),
+        os.path.join(BASE_DIR , 'streamer/templates'),],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

@@ -16,9 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from download import views as v
+from streamer import views as vs
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('dvid/', v.DescargarVideoYoutube ),
     path('daud/', v.DescargarAudioYoutube ),
+    path('streamer/', vs.streamer ),
 ]

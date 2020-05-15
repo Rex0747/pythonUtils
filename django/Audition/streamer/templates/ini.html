@@ -1,0 +1,29 @@
+{% load  static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>STTREAMER</title>
+        <link rel="STYLESHEET" type="text/css" href={% static 'css/streamer.css' %}>
+       
+    </head>
+    <body >
+        <p id="portada">STREAMER</p>
+    {% block content %}
+        
+    <video controls="controls">
+    <source src= {% static 'video/Nightwish-GhostLoveScore.mp4' %}>
+        Your browser does not support the video tag.
+       
+    </video>
+    
+    <video controls="controls">
+        <source src= {% static 'video/Burzum - My journey to the stars.mp4' %}>
+            Your browser does not support the video tag.
+           
+        </video>
+    
+    {% endblock %}
+    </body>
+
+
+</html>

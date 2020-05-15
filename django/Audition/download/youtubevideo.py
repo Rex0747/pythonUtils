@@ -6,6 +6,9 @@ import sys
 from pydub import AudioSegment
 import pydub.utils
 from Audition.settings import BASE_DIR
+from glob import glob
+import os
+import subprocess
 errores = " "
 
 
@@ -82,8 +85,26 @@ def DescargarAudio( url ):
     fila = ruta + "/" + name + "." + audio.extension
     f = audio.download( fila)
     #print('Bajado: '+str(f)) 
-    fichero = convertir(fila)
+    fichero = convertir2(fila)
     return fichero
+
+def convertir2(fichero):
+    fexport = fichero + ".mp3"
+
+    print("Convirtiendo fichero " + fexport + " a mp3\n")
+    print("Exportando a mp3 ")
+    try:
+        print("Segmentando.")
+        exec = sys.prefix + '/ffmpeg.exe -i ' + fichero + ' -vn -ab 128k -ar 44100 -y ' + fexport
+        print(exec)
+        res=subprocess.run( exec, shell=True)
+        #res=subprocess.run(r'G:/ffmpeg/ffmpeg.exe -i ' + i + ' -vn -ab 128k -ar 44100 -y ' + i +'.mp3', shell=True)
+        print(res.check_returncode())
+
+    except Exception as ValueError:
+        print("Errores al convertir " + str(ValueError))
+    print("Conversion finalizada.")
+    return fexport
 
 
 def convertir(fichero):
