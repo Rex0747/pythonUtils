@@ -81,10 +81,14 @@ def DescargarAudio( url ):
     # print(video.videoid)
     # print(video.viewcount)
     name = ''
-    patron = r"!3$%&/(=?¿|¡@#~€¬¡[]çºª{}- ,;<º\ª>*+)"
+    #patron = r"!3$%&/(=?¿|¡@#~€¬¡[]çºª{}- ,;'<º\ª>*+✧)"
+    #for i in video.title:
+        #if i not in patron:
+            #name += i
     for i in video.title:
-        if i not in patron:
+        if ord(i) in range(65,91) or ord(i) in range(97,123) or ord(i) in range(48,58) or ord(i) == 46:
             name += i
+
     print('VIDEO-TITLE: ' + video.title)
     print('VIDEO.NAME: ' + name)
     #name = video.title.replace(" ", "")
