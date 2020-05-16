@@ -80,7 +80,14 @@ def DescargarAudio( url ):
     # print(video.thumb)
     # print(video.videoid)
     # print(video.viewcount)
-    name = video.title.replace(" ", "")
+    name = ''
+    patron = r"!3$%&/(=?¿¡{}- ,;<º\ª>*+)"
+    for i in video.title:
+        if i not in patron:
+            name += i
+    print('VIDEO-TITLE: ' + video.title)
+    print('VIDEO.NAME: ' + name)
+    #name = video.title.replace(" ", "")
     audio = video.getbestaudio(preftype="any") #any
     fila = ruta + "/" + name + "." + audio.extension
     f = audio.download( fila)
@@ -90,6 +97,9 @@ def DescargarAudio( url ):
 
 def convertir2(fichero):
     fexport = fichero + ".mp3"
+
+    f = open(fexport,'wb')
+    f.close()
 
     print("Convirtiendo fichero " + fexport + " a mp3\n")
     print("Exportando a mp3 ")
