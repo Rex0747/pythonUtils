@@ -9,6 +9,9 @@ import os
 import pyglet
 from pydub import AudioSegment
 import pydub.utils
+from glob import glob
+import gc
+
 errores = " "
 mode = 0
 
@@ -94,32 +97,47 @@ def convertir(fichero):
     f.close()
     print("Convirtiendo fichero " + fexport + " a mp3\n")
     print("Exportando a mp3 ")
+    import logging
+    import psutil
+    print('MEMORIA: ' + str( psutil.virtual_memory()))
     try:
         print("Segmentando.")
-        AudioSegment.ffmpeg = r'C:\Programas\Portable_APP\WPy64-3810\python-3.8.1.amd64\Scripts\ffmpeg.exe'
-        AudioSegment.converter = r'C:\Programas\Portable_APP\WPy64-3810\python-3.8.1.amd64\Scripts\ffmpeg.exe'
+        AudioSegment.ffmpeg = r'C:\Programas\Portable_APP\Python_3.8_Portable\python-3.8.3rc1.amd64\ffmpeg.exe'
+        AudioSegment.converter = r'C:\Programas\Portable_APP\Python_3.8_Portable\python-3.8.3rc1.amd64\ffmpeg.exe'
         sonido = AudioSegment.from_file(fichero)
         print("Exportando.")
         sonido.export( fexport , format="mp3" , bitrate="128k" )
     except Exception as ValueError:
         print("Errores al convertir " + str(ValueError))
-    print("Conversion finalizada.")
+    print("Conversion finalizada de " + fexport)
 
 
 if __name__ == "__main__":
     ruta = 'C:/temp'#'/home/peli/Videos'
     enlace = ""  # Aqui va enlace de la lista
     print("DownloadsYoutube V1.0 todos los derechos reservados.\n")
-    mode = input("Teclea 0 si vas a bajar un fichero , 1 si es una lista y 2 solo audio.\n")
+    mode = input("Teclea 0 si vas a bajar un fichero , 1 si es una lista , 2 solo audio, 3 convertir a mp3.\n")
     enlace = input("Pega ahora el enlace\n")
     print("La ruta por defecto de descarga es " + ruta + '\n')
     ralt = input("Para modificar la ruta pulsa 0 ,Para dejarlo asi pulsa enter \n")
     if ralt == '0':
         ruta = input("Introduce ruta a descargar\n")
 
-    
-
-    getvid(enlace , mode , ruta)
+    if mode == '3':
+        ruta = input('Escribe ruta donde se encuentran los .webm')
+        ruta = ruta.replace("\\" , "" )
+        files = glob(ruta + '/*.webm')
+        for i in files:
+            print('Convirtiendo ' + str(i))
+            convertir(i)
+            
+        
+    else:
+        getvid(enlace , mode , ruta)
+        
+        
+        
+        
     #music = pyglet.resource.media("C:\Lune.mp3")
     #music.play()
     #pyglet.app.run()
