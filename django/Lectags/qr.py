@@ -17,8 +17,10 @@ class qr:
             #print('Codigo enviado')
             #self.tmp.show()
         #self.lista =self.articulo.split('|')
+        pass
     
     def getVal(self):
-        return self.lista
+        #return self.lista
+        pass
 
     

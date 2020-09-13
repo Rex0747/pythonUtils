@@ -1,7 +1,9 @@
-#import sys
-#import qr
+import sys
+import qr
 #from prb1 import evento
 from pynput import keyboard as kb
+from sqlite.sqlite import baseData
+
 
 txt = ''
 #data = ''
@@ -9,7 +11,8 @@ lista = []
 
 def inicio():
     print(data)
-    
+    db = baseData('db.s3db' )
+    db.insertarDato( data )
 
 def pulsa(tecla):
     global data
@@ -31,13 +34,14 @@ def pulsa(tecla):
     else:
         lista.append(tecla)
 
-with kb.Listener(pulsa) as escuchador:
-    escuchador.join()
+if(__name__ == '__main__'):
+
+    with kb.Listener(pulsa) as escuchador:
+        escuchador.join()
 
 
-<<<<<<< HEAD
-Qrcode = qr.qr()
-print( 'Imprime: ' + str(Qrcode.getVal()))
 
-=======
->>>>>>> 73f78497a074c29243251c14a3f07e5702bf86db
+
+
+#Qrcode = qr.qr()
+#print( 'Imprime: ' + str(Qrcode.getVal()))
