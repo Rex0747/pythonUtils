@@ -78,7 +78,8 @@ code = '001243'
 articulo = input('Lee lector qr')
 tmp = pyqrcode.QRCode( articulo, error='H', version=3, mode=None, encoding='iso-8859-1')
 #tmp = pyqrcode.create(articulo)
-#print(tmp.text())
+#print(tmp.text()
+
 enviar = input('Enviar linea S/N ' + articulo)
 if(enviar == 'S' or enviar == 's'):
     print('Codigo enviado')
@@ -133,6 +134,21 @@ canvas.showPage()
 # canvas.roundRect(x, y, width, height, radius, stroke=1, fill=0) 
 
 canvas.save()
+
+
+from pynput import keyboard as kb
+
+lista = []
+
+def pulsa(tecla):
+	print('Se ha pulsado la tecla ' + str(tecla))
+	if tecla:
+		print(str(lista))
+	else:
+		lista.append(tecla)
+
+with kb.Listener(pulsa) as escuchador:
+	escuchador.join()
 
 
 
