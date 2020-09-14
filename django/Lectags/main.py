@@ -10,9 +10,12 @@ txt = ''
 lista = []
 
 def inicio():
-    print(data)
+    #print(data)
     db = baseData('db.s3db' )
     db.insertarDato( data )
+
+def enviarPedido():
+    pass
 
 def pulsa(tecla):
     global data
@@ -29,6 +32,11 @@ def pulsa(tecla):
         #print(data)
         #print('Valor: '+  txt)
         #print(str(type(txt)))
+        if data == 'AAAAAAAA':
+            enviarPedido()
+        elif data == 'BBBBBBBB':
+            pass
+
         lista.clear()
         inicio()
     else:

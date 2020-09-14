@@ -16,10 +16,9 @@ class baseData:
             print( str(e) )
 
     def insertarDato(self, dato ):
-        print('Vamos a Insertar....', dato )
-        print('Tipo: ', type( dato ))
+        #print('Vamos a Insertar....', dato )
+        #print('Tipo: ', type( dato ))
         try:
-            #self.conn.execute('INSERT INTO indice( indice )VALUES( ? )', dato )
             self.c = self.conn.cursor()
             self.c.execute( 'INSERT INTO indice VALUES( ? )', ( dato, ) )
             self.conn.commit()
