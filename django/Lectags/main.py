@@ -6,8 +6,8 @@ from pynput.keyboard import _win32
 from sqlite.sqlite import baseData
 
 txt = ''
-#data = ''
 lista = []
+
 
 def inicio():
     #print(data)
@@ -28,7 +28,7 @@ def enviarPedido():
     db.leerDato()
 
 def pulsa(tecla):
-    global data
+    global data 
     data = ''
     #print('Se ha pulsado la tecla ' + str(tecla))
     if tecla == kb.Key.esc:
@@ -55,10 +55,3 @@ if(__name__ == '__main__'):
 
     with kb.Listener(pulsa) as escuchador:
         escuchador.join()
-
-
-
-
-
-#Qrcode = qr.qr()
-#print( 'Imprime: ' + str(Qrcode.getVal()))
