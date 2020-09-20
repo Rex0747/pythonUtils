@@ -1,25 +1,9 @@
-from pynput import keyboard as kb 
+import requests
+import json
 
+resp = requests.get('http://localhost:8082/etiquetas/2118')
 
-class evento:
-
-	lista = []
-
-	def __init__(self):
-		pass
+print( resp.ok )
+#print(type(resp))
+if resp.ok == True:
 	
-	with kb.Listener(pulsa) as escuchador:
-		escuchador.join()
-	
-
-	def pulsa(self,tecla):
-		print('Se ha pulsado la tecla ' + str(tecla))
-		if tecla == kb.Key.enter:
-			print(str(self.lista))
-			self.lista.clear()
-		else:
-			self.lista.append(tecla)
-
-	
-
-
