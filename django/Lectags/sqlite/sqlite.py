@@ -36,9 +36,12 @@ class baseData:
         txt = ''
         self.c = self.conn.cursor()
         rows = None
+        link = None
         try:
             self.c.execute( 'SELECT indice FROM indice' )
             rows = self.c.fetchall()
+            self.c.execute('SELECT link FROM link')
+            link = self.c.fetchone()[0]
             
         except Exception as e:
             print('Error en la lectura de datos. '+ str(e))
@@ -48,20 +51,25 @@ class baseData:
         
         txt = txt[1 : ]
         print( 'Dato: ', txt )
-
-        resp = requests.get('http://localhost:8082/pedidodc/'+ txt )
-        if resp.ok == True:
-            self.c.execute( 'DELETE FROM indice' )
-            self.conn.commit()
-        print('Respuesta: ', resp.ok)
+        try:
+            resp = requests.get(link + txt )
+            if resp.ok == True:
+                self.c.execute( 'DELETE FROM indice' )
+                self.conn.commit()
+            print('Respuesta: ', resp.ok)
+        except  Exception as e:
+            print('Error: ', str(e))
 
     def revPedido( self ):
         txt = ''
         self.c = self.conn.cursor()
         rows = None
+        link = None
         try:
             self.c.execute( 'SELECT indice FROM indice' )
             rows = self.c.fetchall()
+            self.c.execute('SELECT link FROM link')
+            link = self.c.fetchone()[0]
             
         except Exception as e:
             print('Error en la lectura de datos. '+ str(e))
@@ -72,8 +80,11 @@ class baseData:
         txt = txt[ 1 : ] + '|' + 'ReViSiOn'
         print( 'Dato: ', txt )
 
-        resp = requests.get('http://localhost:8082/pedidodc/'+ txt )
-        print('Respuesta: ', resp.ok)
+        try:
+            resp = requests.get( link + txt )
+            print('Respuesta: ', resp.ok)
+        except Exception as e:
+            print('Error en la lectura de datos. '+ str(e))
         
     def borrarPedido(self):
         try:
