@@ -49,11 +49,40 @@ class baseData:
         txt = txt[1 : ]
         print( 'Dato: ', txt )
 
-        resp = requests.get('http://localhost:8082/etiquetas/'+ txt )
+        resp = requests.get('http://localhost:8082/pedidodc/'+ txt )
         if resp.ok == True:
             self.c.execute( 'DELETE FROM indice' )
             self.conn.commit()
         print('Respuesta: ', resp.ok)
+
+    def revPedido( self ):
+        txt = ''
+        self.c = self.conn.cursor()
+        rows = None
+        try:
+            self.c.execute( 'SELECT indice FROM indice' )
+            rows = self.c.fetchall()
+            
+        except Exception as e:
+            print('Error en la lectura de datos. '+ str(e))
+        
+        for dat in rows:
+            txt += '|' + str(dat[0])
+        
+        txt = txt[ 1 : ] + '|' + 'ReViSiOn'
+        print( 'Dato: ', txt )
+
+        resp = requests.get('http://localhost:8082/pedidodc/'+ txt )
+        print('Respuesta: ', resp.ok)
+        
+    def borrarPedido(self):
+        try:
+            self.c = self.conn.cursor()
+            self.c.execute( 'DELETE FROM indice' )
+            self.conn.commit()
+        except Exception as e:
+            print('Error: ', str(e))
+        
 
     def compararTags(self, codigo ):
             self.c = self.conn.cursor()

@@ -13,6 +13,10 @@ def inicio():
     #print(data)
     if data == '010304':
         enviarPedido()
+    elif data == '021992':
+        revisarPedido()
+    elif data == '1551':
+        borrarPedido()
     else:
         db = baseData('db.s3db' )
         res = db.compararTags(data)
@@ -26,7 +30,15 @@ def inicio():
 def enviarPedido():
     db = baseData('db.s3db' )
     db.leerDato()
-
+    
+def revisarPedido():
+    db = baseData('db.s3db' )
+    db.revPedido()
+    
+def borrarPedido():
+    db = baseData('db.s3db' )
+    db.borrarPedido()
+    
 def pulsa(tecla):
     global data 
     data = ''
