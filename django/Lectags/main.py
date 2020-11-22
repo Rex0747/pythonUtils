@@ -51,19 +51,24 @@ def pulsa(tecla):
         for i in txt:
             #if i != chr(39):
             data += str(i)
+
         #print(data)
-        #print('Valor: '+  txt)
+        print('Valor: '+  txt)
+        #print(_win32.__doc__)
         #print(str(type(txt)))
         lista.clear()
         inicio()
     else:
         #print('Tecla: ', tecla.char)
         #print('Typo: ',type(tecla))
+        lchars = ['0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F','G','H','I','J','K','L','M','N','Ñ','O','P','Q','R','S','T','U','V','W','X','Y','Z',',','.','-','~']
         if type(tecla)==_win32.KeyCode:
-            if tecla.char in ['0','1','2','3','4','5','6','7','8','9']:
+            if tecla.char in lchars:
                 lista.append(tecla.char)
+                #print(str(lista))
 
 if(__name__ == '__main__'):
 
     with kb.Listener(pulsa) as escuchador:
         escuchador.join()
+
