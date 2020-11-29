@@ -75,13 +75,14 @@ class baseData:
             print('Error en la lectura de datos. '+ str(e))
         
         for dat in rows:
+            print(dat)
             txt += '|' + str(dat[0])
         
-        txt = txt[ 1 : ] + '|' + 'ReViSiOn'
+        #txt = txt[ 1 : ] + '|' + 'ReViSiOn'
         print( 'Dato: ', txt )
 
         try:
-            resp = requests.get( link + txt )
+            resp = requests.get( link + txt )# envia datos
             print('Respuesta: ', resp.ok)
         except Exception as e:
             print('Error en la lectura de datos. '+ str(e))

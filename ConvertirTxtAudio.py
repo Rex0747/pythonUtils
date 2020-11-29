@@ -11,7 +11,7 @@ from playsound import playsound
 from os import  remove
 
 
-texto = "las pibiñas friegaplatos con más lavadoras que derechos"
+texto = "gfh y dispositivo creado correctamente."
 idioma = 'es'
 
 audio = gTTS(text = texto,  lang = idioma, slow = False )
@@ -20,7 +20,7 @@ audio.save('C:/temp/prueba.mp3')
 
 sound = r"C:/temp/prueba.mp3"
 playsound(sound)
-remove("C:/temp/prueba.mp3")
+#remove("C:/temp/prueba.mp3")
 
 
 
