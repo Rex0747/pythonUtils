@@ -1,15 +1,12 @@
 import requests
-import json
+from sqlite.jsonMod import Json
+
 
 #resp = requests.get('http://localhost:8082/etiquetas/2118')
 
-#print( resp.ok )
-#print(type(resp))
-#if resp.ok == True:
-tecla = '4'
-print(type(tecla))
-tecla = '3'
-print(type(tecla))
+mtx = (('2','4','7','1','98988','20.0','H7NA','IZ034','HCSC'),('3','1','2','1','011334','1.0','H7NA','IZL024','HCSC'))
 
+joson = Json()
 
-#if type(tecla)==_win32.KeyCode:
+v1 = joson.crearJson(mtx)
+print('JSON: ', v1)

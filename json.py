@@ -9,7 +9,7 @@ import json
 
 
 confx ="""  
-[{
+[       {
           "modulo": "",
           "estanteria": "", 
           "ubicacion": "",
@@ -30,23 +30,61 @@ confx ="""
           "gfh" : "",
           "dispositivo": "",
           "hopital" : ""
-        }]
+         }         ]
 
              """
+             
+bloque = """
+        {
+          "modulo": "",
+          "estanteria": "", 
+          "ubicacion": "",
+          "division": 0,
+          "codigo": "",
+          "pacto" : 0,
+          "gfh" : "",
+          "dispositivo": "",
+          "hospital" : ""
+     
+         """  
+mtx = (('2','4','7','1','98988','20.0','H7NA','IZ034','HCSC'),('3','1','2','1','011334','1.0','H7NA','IZL024','HCSC'))
 
-v = json.loads(confx)
-#print(v)
+print(len(mtx))
 
-print(type(v))
+jeiso = '['
+j = 0
+for i in range(len(mtx)):
+    
+    if j < len(mtx) -1:
+        jeiso += bloque + '},'
+        j += 1
+    else:
+        jeiso += bloque + '}'
+                
 
+jeiso += ']'
+#print(jeiso)
+v = json.loads(jeiso)
+
+
+j= 0
 for i in v:
-    i['modulo'] = '2'
-    i['estanteria'] = '5'
-    i['ubicacion'] = '6'
-    i['division'] = '2'
-    i['pacto'] = '2'
+    
+    i['modulo'] = mtx[j][0]
+    i['estanteria'] = mtx[j][1]
+    i['ubicacion'] = mtx[j][2]
+    i['division'] = mtx[j][3]
+    i['codigo'] = mtx[j][4]
+    i['pacto'] = mtx[j][5]
+    i['gfh'] = mtx[j][6]
+    i['dispositivo'] = mtx[j][7]
+    i['hospital'] = mtx[j][8]
 
-print(v)
+    j += 1
+    
+jeiso = json.dumps(v)
+print(jeiso)
+print(type(jeiso))
 
 
 

@@ -1,6 +1,7 @@
 import sys
 import sqlite3
 import requests
+from sqlite.jsonMod import Json
 
 class baseData:
 
@@ -46,11 +47,20 @@ class baseData:
         except Exception as e:
             print('Error en la lectura de datos. '+ str(e))
         
+        #for dat in rows:
+            #txt += '|' + str(dat[0])
+        js = None
+        Jeis = Json()
+        mtz = []
         for dat in rows:
-            txt += '|' + str(dat[0])
+            js = dat[0].split('~')
+            mtz.append(js)
+
+        txt = Jeis.crearJson(mtz)
+        #print(mtz)
         
-        txt = txt[1 : ]
-        print( 'Dato: ', txt )
+        #txt = txt[1 : ]
+        #print( 'Dato: ', txt )
         try:
             resp = requests.get(link + txt )
             if resp.ok == True:
@@ -60,7 +70,7 @@ class baseData:
         except  Exception as e:
             print('Error: ', str(e))
 
-    def revPedido( self ):
+    """ def revPedido( self ):
         txt = ''
         self.c = self.conn.cursor()
         rows = None
@@ -85,7 +95,34 @@ class baseData:
             resp = requests.get( link + txt )# envia datos
             print('Respuesta: ', resp.ok)
         except Exception as e:
+            print('Error en la lectura de datos. '+ str(e)) """
+        
+    def revPedido( self ):
+        txt = ''
+        self.c = self.conn.cursor()
+        rows = None
+        link = None
+        try:
+            self.c.execute( 'SELECT indice FROM indice' )
+            rows = self.c.fetchall()
+            self.c.execute('SELECT link FROM link')
+            link = self.c.fetchone()[0]
+            
+        except Exception as e:
             print('Error en la lectura de datos. '+ str(e))
+        
+        for dat in rows:
+            print('Fila: ' +dat[0]+'\n')
+            txt += '|' + str(dat[0])
+        
+        txt = txt[ 1 : ] + '|' + 'ReViSiOn'
+        print( 'Dato: ', txt )
+
+        try:
+            resp = requests.get( link + txt )# envia datos
+            print('\nRespuesta: ', resp.ok)
+        except Exception as e:
+            print('\nError en la lectura de datos. '+ str(e))
         
     def borrarPedido(self):
         try:
