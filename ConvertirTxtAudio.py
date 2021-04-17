@@ -11,7 +11,7 @@ from playsound import playsound
 from os import  remove
 
 
-texto = "gfh y dispositivo creado correctamente."
+texto = "en un lugar de la mancha"#"se ha creado el hospital correctamente."
 idioma = 'es'
 
 audio = gTTS(text = texto,  lang = idioma, slow = False )

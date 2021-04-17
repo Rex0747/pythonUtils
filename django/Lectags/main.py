@@ -1,21 +1,46 @@
-import sys
+# -*- coding: utf-8 -*-
+
+
 import qr
-#from prb1 import evento
+#import RPi.GPIO as GPIO
+#GPIO.setmode(GPIO.BCM)
+# 
+#GPIO.setup(22, OUT)
+#GPIO.setup(27, OUT)
+import time
+
+time.sleep(3)
+
+
+
 from pynput import keyboard as kb
-from pynput.keyboard import _win32
 from sqlite.sqlite import baseData
+import platform
+sistema = platform.system()
+
+plataforma = None
+if(sistema == 'Windows'):
+    from pynput.keyboard import _win32
+    plataforma = _win32
+if(sistema == 'Linux'):
+    from pynput.keyboard import _xorg
+    plataforma = _xorg
 
 txt = ''
 lista = []
+delim = '*'
+borrar = '1551'
+comprobar = '021992'
+enviar = '010304'
 
 
 def inicio():
     #print(data)
-    if data == '010304':
+    if data == enviar:
         enviarPedido()
-    elif data == '021992':
+    elif data == comprobar:
         revisarPedido()
-    elif data == '1551':
+    elif data == borrar:
         borrarPedido()
     else:
         db = baseData('db.s3db' )
@@ -25,11 +50,16 @@ def inicio():
             db.insertarDato( data )
             #poner aqui chivato de luz verde de ok
         else:
-            print('Error...Duplicado')   # Poner aqui chivato luz roja de error.
+            print('Error... Referencia duplicada, no se incluye en pedido.')   # Poner aqui chivato luz roja de error.
 
 def enviarPedido():
     db = baseData('db.s3db' )
-    db.leerDato()
+    cuantos = db.compEnvioNoVacio()
+    print('Nfilas: ', str(cuantos))
+    if cuantos > 0:
+        db.leerDato()
+    else:
+        print('No se puede enviar un pedido vacio')
     
 def revisarPedido():
     db = baseData('db.s3db' )
@@ -38,7 +68,15 @@ def revisarPedido():
 def borrarPedido():
     db = baseData('db.s3db' )
     db.borrarPedido()
-    
+
+def comprobarFormato():
+    mtx = data.split(delim)
+    if (len(mtx) == 6 or data == borrar or data == enviar or data == comprobar ):
+        return True
+    else:
+        return False
+
+
 def pulsa(tecla):
     global data 
     data = ''
@@ -53,21 +91,33 @@ def pulsa(tecla):
             data += str(i)
 
         #print(data)
-        print('Valor: '+  txt)
-        #print(_win32.__doc__)
-        #print(str(type(txt)))
-        lista.clear()
-        inicio()
+        #print('Valor: '+  txt)
+        
+        res = comprobarFormato()
+        if res == True:
+            lista.clear()
+            inicio()
+            data = ''
+        else:
+            print('\nCodigo RFID no compatible.')
+            lista.clear()
+            data = ''
+
     else:
         #print('Tecla: ', tecla.char)
         #print('Typo: ',type(tecla))
-        lchars = ['0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F','G','H','I','J','K','L','M','N','Ñ','O','P','Q','R','S','T','U','V','W','X','Y','Z',',','.','-','~']
-        if type(tecla)==_win32.KeyCode:
+        lchars = ['0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F','G','H','I','J','K','L','M','N','Ñ','O','P','Q','R','S','T','U','V','W','X','Y','Z',',','.','-','~','*']
+        if type(tecla) == _xorg.KeyCode:  #_xorg para linux   _win32 para windows
             if tecla.char in lchars:
                 lista.append(tecla.char)
+                #print('Tipo: ', type(tecla.char))
                 #print(str(lista))
 
 if(__name__ == '__main__'):
+
+    print('OS: ', sistema)
+    #print('Typo1: ', type(_xorg))
+    #print('Typo2: ', type(plataforma))
 
     with kb.Listener(pulsa) as escuchador:
         escuchador.join()
