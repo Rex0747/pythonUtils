@@ -2,7 +2,9 @@
 # -*- coding: utf-8 -*-
 import os
 import qr
-from gpiozero import LED
+import sys
+import pyxhook
+# from gpiozero import LED
 from time import sleep
 import time
 import datetime
@@ -10,8 +12,8 @@ import platform
 import keyboard
 from sqlite.sqlite import baseData
 
-led_green = LED(17)
-led_red = LED(23)
+# led_green = LED(17)
+# led_red = LED(23)
 
 #import RPi.GPIO as GPIO
 #GPIO.setmode(GPIO.BCM)
@@ -51,7 +53,6 @@ def ledRafaga(device,npulsos,tiempo):
         print('Estado: ',device.is_active)
         sleep(tiempo)
 
-    
 def inicio(data):
     #print(data)
     if data == enviar:
@@ -64,14 +65,18 @@ def inicio(data):
         db = baseData(ruta_db )
         res = db.compararTags(data)
         if res == False:
-            print('Insertando: ', str(data))
-            db.insertarDato( data )
-            #poner aqui chivato de luz verde de ok
-            change(led_green)
+            ret = comprobarFormato()
+            if ret == True:
+                print('Insertando: ', str(data))
+                db.insertarDato( data )
+                #poner aqui chivato de luz verde de ok
+                #change(led_green)
+            else:
+                print('Lectura incompatble: ', str(data))
         else:
             print('Error... Referencia duplicada, no se incluye en pedido.')   # Poner aqui chivato luz roja de error.
             print('DATO: ', data)
-            ledOnTime(led_red, 3)
+            #ledOnTime(led_red, 3)
 
 def enviarPedido():
     db = baseData(ruta_db )
@@ -96,6 +101,26 @@ def comprobarFormato():
         return True
     else:
         return False
+#this function is called everytime a key is pressed.
+def OnKeyPress(event):
+    global txt
+    
+    if event.Key == 'minus'or event.Key == 'slash':
+        txt += '-'
+    elif event.Key == 'plus' or event.Key == 'braceright':
+        txt += '*'
+    elif event.Key == 'Shift_L':
+        return
+    elif event.Key == 'Return':
+        print(txt)
+        fob=open(log_file,'a')
+        fob.write(txt + '\n')
+        txt = ''
+        fob.close()
+        
+    else:
+        txt += event.Key
+    #print(txt)
 
 #_______Declaraciones____________
 
@@ -121,31 +146,44 @@ borrar = '1551'
 comprobar = '021992'
 enviar = '010304'
 
-ledRafaga(led_green,9,0.2)
-sleep(2)
-ledOnTime(led_red, 4)
+
+#ledRafaga(led_green,9,0.2)
+#sleep(2)
+#ledOnTime(led_red, 4)
 
 #______End Declaraciones__________
 
 if(__name__ == '__main__'):
+    data = ''
     txt = ''
     v = ''
     ruta = os.getcwd()
     ruta_db = ruta + '/db.s3db'
     print('OS: ', sistema)
+    print(sys.getdefaultencoding())
     print('Directotio actual: ', ruta)
-    #while v != '028187':
-    while(True):
+    log_file = '/home/pi/Python/lectags/file.log'
+
+    """  while(True):        #Bloque antiguo
         events = keyboard.record('enter')
         txt = keyboard.get_typed_strings(events)
         # play these events
         #keyboard.play(events)
-        v = list(txt)[0]
-        data = v.replace('+','*')
+        #v = list(txt)[0]
+        for i in txt:
+            data += i
+        
+        #print(data)
+        #data = v.replace('+','*')
         fila = open( ruta + '/lg.log','a+')
         fila.write('Linea: ' + data +'\n')
         fila.close()
         inicio(data)
+        data = '' """
+    new_hook=pyxhook.HookManager()
+    new_hook.KeyDown=OnKeyPress
+    new_hook.HookKeyboard()
+
 
 
 
